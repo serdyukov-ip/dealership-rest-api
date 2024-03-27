@@ -1,4 +1,4 @@
-# SQL Showcase
+# Car Dealership REST API
 
 ## Содержание
 - [О проекте](#о-проекте)
