@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.serdyukov.ip.CarDealershipRestApp.models.CarEvent;
 import ru.serdyukov.ip.CarDealershipRestApp.models.Manager;
 import ru.serdyukov.ip.CarDealershipRestApp.repositories.CarEventRepository;
+import ru.serdyukov.ip.CarDealershipRestApp.util.CarEventNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class CarEventService {
 
     public CarEvent findOne(int id) {
         Optional<CarEvent> foundCarEvent = carEventRepository.findById(id);
-        return foundCarEvent.orElse(null);
+        return foundCarEvent.orElseThrow(CarEventNotFoundException::new);
     }
 
     @Transactional

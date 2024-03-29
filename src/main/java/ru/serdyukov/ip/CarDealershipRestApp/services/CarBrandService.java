@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.serdyukov.ip.CarDealershipRestApp.models.CarBrand;
 import ru.serdyukov.ip.CarDealershipRestApp.models.Manager;
 import ru.serdyukov.ip.CarDealershipRestApp.repositories.CarBrandRepository;
+import ru.serdyukov.ip.CarDealershipRestApp.util.CarBrandNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class CarBrandService {
 
     public CarBrand findOne(int id) {
         Optional<CarBrand> foundCarBrand = carBrandRepository.findById(id);
-        return foundCarBrand.orElse(null);
+        return foundCarBrand.orElseThrow(CarBrandNotFoundException::new);
     }
 
     @Transactional

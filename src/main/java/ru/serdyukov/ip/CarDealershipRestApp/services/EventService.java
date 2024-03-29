@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.serdyukov.ip.CarDealershipRestApp.models.Event;
 import ru.serdyukov.ip.CarDealershipRestApp.models.Manager;
 import ru.serdyukov.ip.CarDealershipRestApp.repositories.EventRepository;
+import ru.serdyukov.ip.CarDealershipRestApp.util.EventNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class EventService {
 
     public Event findOne(int id) {
         Optional<Event> foundEvent = eventRepository.findById(id);
-        return foundEvent.orElse(null);
+        return foundEvent.orElseThrow(EventNotFoundException::new);
     }
 
     @Transactional
