@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.serdyukov.ip.CarDealershipRestApp.models.Manager;
 import ru.serdyukov.ip.CarDealershipRestApp.repositories.ManagerRepository;
+import ru.serdyukov.ip.CarDealershipRestApp.util.ManagerNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class ManagerService {
 
     public Manager findOne(int id) {
         Optional<Manager> foundManager = managerRepository.findById(id);
-        return foundManager.orElse(null);
+        return foundManager.orElseThrow(ManagerNotFoundException::new);
     }
 
     @Transactional
