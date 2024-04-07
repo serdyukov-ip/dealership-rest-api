@@ -2,13 +2,16 @@ package ru.serdyukov.ip.CarDealershipRestApp.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.serdyukov.ip.CarDealershipRestApp.models.CarModel;
 import ru.serdyukov.ip.CarDealershipRestApp.models.Event;
 import ru.serdyukov.ip.CarDealershipRestApp.services.EventService;
+import ru.serdyukov.ip.CarDealershipRestApp.util.CarEventNotFoundException;
+import ru.serdyukov.ip.CarDealershipRestApp.util.EventErrorResponse;
+import ru.serdyukov.ip.CarDealershipRestApp.util.ManagerErrorResponse;
+import ru.serdyukov.ip.CarDealershipRestApp.util.ManagerNotFoundException;
 
 import java.util.List;
 
@@ -33,5 +36,14 @@ public class EventController {
     @GetMapping("/{id}")
     public Event getEvent(@PathVariable("id") int id) {
         return eventService.findOne(id);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<EventErrorResponse> handleException(CarEventNotFoundException e) {
+        EventErrorResponse response = new EventErrorResponse(
+                "Event with this id wasn't found!",
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }
