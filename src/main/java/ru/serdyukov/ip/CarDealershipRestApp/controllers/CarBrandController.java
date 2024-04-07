@@ -2,13 +2,14 @@ package ru.serdyukov.ip.CarDealershipRestApp.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.serdyukov.ip.CarDealershipRestApp.models.Car;
 import ru.serdyukov.ip.CarDealershipRestApp.models.CarBrand;
 import ru.serdyukov.ip.CarDealershipRestApp.services.CarBrandService;
+import ru.serdyukov.ip.CarDealershipRestApp.util.CarBrandErrorResponse;
+import ru.serdyukov.ip.CarDealershipRestApp.util.CarBrandNotFoundException;
 
 import java.util.List;
 
@@ -33,5 +34,14 @@ public class CarBrandController {
     @GetMapping("/{id}")
     public CarBrand getCarBrand(@PathVariable("id") int id) {
         return carBrandService.findOne(id);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<CarBrandErrorResponse> handleException(CarBrandNotFoundException e) {
+        CarBrandErrorResponse response = new CarBrandErrorResponse(
+                "Car Brand with this id wasn't found!",
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }
