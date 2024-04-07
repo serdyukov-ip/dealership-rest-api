@@ -27,7 +27,6 @@ public class CarBrandController {
 
     @GetMapping()
     public List<CarBrand> getCarBrands() {
-        List<CarBrand> carBrands = carBrandService.findAll();
         return carBrandService.findAll();
     }
 

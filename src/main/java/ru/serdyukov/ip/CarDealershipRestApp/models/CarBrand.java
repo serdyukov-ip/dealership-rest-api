@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table
+@Table(name = "carbrand")
 public class CarBrand {
 
     @Id
@@ -17,8 +17,6 @@ public class CarBrand {
     private int id;
 
     @Column(name = "name")
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String name;
 
 }
