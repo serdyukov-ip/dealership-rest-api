@@ -35,4 +35,12 @@ public class CarBrandService {
     public void save(CarBrand carBrand) {
         carBrandRepository.save(carBrand);
     }
+
+    @Transactional
+    public void delete(int id) {
+        CarBrand carBrand = carBrandRepository.findById(id)
+                .orElseThrow(() -> new CarBrandNotFoundException());
+
+        carBrandRepository.delete(carBrand);
+    }
 }

@@ -44,4 +44,10 @@ public class CarBrandController {
         );
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCarBrand(@PathVariable("id") int id) {
+        carBrandService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
